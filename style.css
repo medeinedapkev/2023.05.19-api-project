@@ -1,0 +1,19 @@
+.menu-list {
+    display: flex;
+    gap: 20px;
+}
+
+.menu-item {
+    list-style-type: none;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: black;
+}
+
+.active {
+    background-color: green;
+}
