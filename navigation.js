@@ -49,7 +49,7 @@ function createMenu(menu) {
         liElement.prepend(linkElement);
         ulElement.append(liElement);
 
-        const currentPage = window.location.href;
+        const currentPage = location.href;
 
         if(currentPage === linkElement.href) {
             liElement.classList.add('active');

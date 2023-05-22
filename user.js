@@ -1,5 +1,5 @@
 async function init() {
-    const userInfoResponse = await fetch('https://jsonplaceholder.typicode.com/users');
+    const userInfoResponse = await fetch('https://jsonplaceholder.typicode.com/users/1');
     const userInfoData = await userInfoResponse.json();
 
     const bodyElement = document.body;
@@ -13,60 +13,68 @@ init();
 function createUserInfo(data) {
     const userInfoDiv = document.createElement('div');
     userInfoDiv.classList.add('user-info-wrapper');
-    for (let i = 0; i < 1; i++) {
-        const name = data[0].name;
-        const userName = data[0].username;
-        const email = data[0].email;
-        const street = data[0].address.street;
-        const apartment = data[0].address.suite;
-        const city = data[0].address.city;
-        const zipCode = data[0].address.zipcode;
-        const phone = data[0].phone;
-        const website = data[0].website;
-        const companyName = data[0].company.name;
 
-        const h1Element = document.createElement('h2');
-        h1Element.classList.add('user-name');
-        h1Element.textContent = `${name} information:`;
+    const name = data.name;
+    const userName = data.username;
+    const email = data.email;
+    const street = data.address.street;
+    const apartment = data.address.suite;
+    const city = data.address.city;
+    const zipCode = data.address.zipcode;
+    const phone = data.phone;
+    const website = data.website;
+    const companyName = data.company.name;
 
-        const userInfoList = document.createElement('ul');
+    const h1Element = document.createElement('h2');
+    h1Element.classList.add('user-name');
+    h1Element.textContent = `${name} information:`;
 
-        const userNameElement = document.createElement('li');
-        userNameElement.classList.add('user-info-item');
-        userNameElement.textContent = `Username: ${userName}`;
+    const userNameElement = document.createElement('p');
+    userNameElement.classList.add('user-info-item');
+    userNameElement.textContent = `Username: ${userName}`;
 
-        const emailElement = document.createElement('li');
-        emailElement.classList.add('user-info-item');
-        emailElement.textContent = `Email: ${email}`;
+    const emailElement = document.createElement('p');
+    emailElement.classList.add('user-info-item');
+    emailElement.textContent = `Email: `;
+    const linkToEmail = document.createElement('a');
+    linkToEmail.href = `mailto:${email}`;
+    linkToEmail.textContent = email;
 
-        const addressElement = document.createElement('li');
-        addressElement.classList.add('user-info-item');
-        addressElement.textContent = 'Address: ';
+    emailElement.append(linkToEmail);
 
-        const linkToAddress = document.createElement('a');
-        linkToAddress.href = `https://www.google.com/maps?q=${data[0].address.geo.lat},${data[0].address.geo.lng}`;
-        linkToAddress.textContent = `${street}, ${apartment}, ${city}, ${zipCode}.`
+    const addressElement = document.createElement('p');
+    addressElement.classList.add('user-info-item');
+    addressElement.textContent = 'Address: ';
 
-        addressElement.append(linkToAddress);
+    const linkToAddress = document.createElement('a');
+    linkToAddress.href = `https://www.google.com/maps?q=${data.address.geo.lat},${data.address.geo.lng}`;
+    linkToAddress.textContent = `${street}, ${apartment}, ${city}, ${zipCode}.`;
 
-        const phoneElement = document.createElement('li');
-        phoneElement.classList.add('user-info-item');
-        phoneElement.textContent = `Phone: ${phone}`;
+    addressElement.append(linkToAddress);
 
-        const websiteElement = document.createElement('li');
-        websiteElement.classList.add('user-info-item');
-        websiteElement.textContent = `Website: ${website}`;
+    const phoneElement = document.createElement('p');
+    phoneElement.classList.add('user-info-item');
+    phoneElement.textContent = 'Phone: ';
+    const linkToPhone = document.createElement('a');
+    linkToPhone.href = `tel:${phone}`
+    linkToPhone.textContent = phone;
 
-        const companyElement = document.createElement('li');
-        companyElement.classList.add('user-info-item');
-        companyElement.textContent = `Work place: ${companyName}.`;
+    phoneElement.append(linkToPhone);
 
+    const websiteElement = document.createElement('p');
+    websiteElement.classList.add('user-info-item');
+    websiteElement.textContent = 'Website: ';
+    const linkToWebsite = document.createElement('a');
+    linkToWebsite.href = website;
+    linkToWebsite.textContent = website;
 
+    websiteElement.append(linkToWebsite);
 
-        userInfoList.append(userNameElement, emailElement, addressElement, phoneElement, websiteElement, companyElement);
-        userInfoDiv.append(h1Element, userInfoList);
+    const companyElement = document.createElement('p');
+    companyElement.classList.add('user-info-item');
+    companyElement.textContent = `Work place: ${companyName}.`;
 
-    }
+    userInfoDiv.append(h1Element, userNameElement, emailElement, addressElement, phoneElement, websiteElement, companyElement);
 
     return userInfoDiv;
 }
