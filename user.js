@@ -1,11 +1,13 @@
 async function init() {
-    const userInfoResponse = await fetch('https://jsonplaceholder.typicode.com/users/1');
+    const userInfoResponse = await fetch('https://jsonplaceholder.typicode.com/users/1?_embed=posts&_embed=albums');
     const userInfoData = await userInfoResponse.json();
 
     const bodyElement = document.body;
 
     const userInfo = createUserInfo(userInfoData);
-    bodyElement.prepend(userInfo);
+    const userPosts = createUserPosts(userInfoData);
+    const userAlbums = createUserAlbums(userInfoData);
+    bodyElement.prepend(userInfo, userPosts, userAlbums);
 }
 
 init();
@@ -77,4 +79,61 @@ function createUserInfo(data) {
     userInfoDiv.append(h1Element, userNameElement, emailElement, addressElement, phoneElement, websiteElement, companyElement);
 
     return userInfoDiv;
+}
+
+function createUserPosts(data) {
+    const postsWrapper = document.createElement('div');
+    postsWrapper.classList.add('posts-wrapper');
+    
+    data.posts.forEach(post => {
+        const postTitle = post.title;
+        const postText = post.body;
+
+        const postItem = document.createElement('div');
+        postItem.classList.add('post-item');
+
+        const linkToPost = document.createElement('a');
+        linkToPost.href = '#'
+
+        const postTitleElement = document.createElement('h2');
+        postTitleElement.classList.add('post-title');
+        postTitleElement.textContent = postTitle;
+
+        linkToPost.append(postTitleElement);
+
+        const postTextElement = document.createElement('p');
+        postTextElement.classList.add('post-text');
+        postTextElement.textContent = postText;
+
+        postItem.prepend(linkToPost, postTextElement);
+        postsWrapper.prepend(postItem); 
+    })
+
+    return postsWrapper;
+}
+
+function createUserAlbums(data) {
+    const albumsWrapper = document.createElement('div');
+    albumsWrapper.classList.add('albums-wrapper');
+
+    data.albums.forEach(album => {
+        console.log(album.title)
+        const albumTitle = album.title;
+
+        const albumItem = document.createElement('div');
+        albumItem.classList.add('album-item');
+
+        const linkToAlbum = document.createElement('a')
+        linkToAlbum.href = '#';
+
+        const albumTitleElement = document.createElement('h2');
+        albumTitleElement.classList.add('album-title');
+        albumTitleElement.textContent = albumTitle;
+
+        linkToAlbum.prepend(albumTitleElement);
+        albumItem.prepend(linkToAlbum)
+        albumsWrapper.prepend(albumItem);
+    })
+
+    return albumsWrapper;
 }
