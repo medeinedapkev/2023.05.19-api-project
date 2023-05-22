@@ -4,7 +4,7 @@ function init() {
     headerElement.classList.add('navigation-wrapper')
     bodyElement.prepend(headerElement);
 
-    const navigationDiv = document.createElement('div');
+    const navigationDiv = document.createElement('nav');
     navigationDiv.classList.add('navigation');
     headerElement.append(navigationDiv);
 
@@ -38,7 +38,6 @@ function createMenu(menu) {
     ulElement.classList.add('menu-list');
 
     menu.forEach(link => {
-        console.log(link)
         const liElement = document.createElement('li');
         liElement.classList.add('menu-item');
 

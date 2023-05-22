@@ -1,10 +1,10 @@
 async function init() {
     const albumsResponse = await fetch('https://jsonplaceholder.typicode.com/albums?_embed=photos&_expand=user');
     const albumsData = await albumsResponse.json();
+
     const albumsWrapper = document.querySelector('#albums-wrapper');
     const albumsList = createAlbumsList(albumsData);
     albumsWrapper.prepend(albumsList);
-
 }
 
 init();
@@ -13,14 +13,18 @@ function createAlbumsList(albums) {
     const albumDiv = document.createElement('div');
     albumDiv.classList.add('albums-list');
     albums.forEach(album => {
-
         const albumItemDiv = document.createElement('div');
         albumItemDiv.classList.add('album-item');
 
         const title = album.title;
         const author = album.user.name;
         const photosNumber = album.photos.length;
-        const firstPhoto = album.photos[0].url;
+        const randomIndex = Math.floor(Math.random() * photosNumber);
+        const randomPhotoAlt = album.photos[randomIndex].title;
+        const randomPhotoUrl = album.photos[randomIndex].thumbnailUrl;
+
+        const linkPhotoAlbum = document.createElement('a');
+        linkPhotoAlbum.href = '#';
 
         const albumsTitle = document.createElement('h2');
         albumsTitle.classList.add('albums-title');
@@ -36,13 +40,13 @@ function createAlbumsList(albums) {
         albumAuthor.classList.add('albums-author');
         albumAuthor.textContent = author;
 
-        const linkPhotoAlbum = document.createElement('a');
-        linkPhotoAlbum.href = '#';
         const picture = document.createElement('img');
-        picture.src = firstPhoto;
-        linkPhotoAlbum.prepend(picture);
+        picture.src = randomPhotoUrl;
+        picture.alt = randomPhotoAlt;
 
-        albumItemDiv.append(albumsTitle, albumAuthor, linkPhotoAlbum);
+        linkPhotoAlbum.prepend(albumsTitle, albumAuthor, picture);
+
+        albumItemDiv.append(linkPhotoAlbum);
         albumDiv.append(albumItemDiv);
     })
 
