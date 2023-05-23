@@ -24,6 +24,7 @@ function createAlbumsList(albums) {
         const randomPhotoUrl = album.photos[randomIndex].thumbnailUrl;
 
         const linkPhotoAlbum = document.createElement('a');
+        linkPhotoAlbum.classList.add('link');
         linkPhotoAlbum.href = '#';
 
         const albumsTitle = document.createElement('h2');

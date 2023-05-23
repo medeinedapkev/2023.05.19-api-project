@@ -23,7 +23,7 @@ function createPostsList(posts) {
         const postTitle = document.createElement('a')
         postTitle.classList.add('post-title');
         postTitle.href = './post.html';
-        postTitle.textContent = `Title: ${title}`;
+        postTitle.textContent = title;
 
         const postsComments = document.createElement('span')
         postsComments.classList.add('comments');
@@ -35,7 +35,7 @@ function createPostsList(posts) {
         authorElement.href = './user.html';
         authorElement.textContent = `Author: ${author}`;
 
-        postDivElement.append(postTitle,' - ', authorElement);
+        postDivElement.append(postTitle, authorElement);
         postsDiv.append(postDivElement) 
     })
 

@@ -1,19 +1,67 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.link {
+    text-decoration: none;
+}
+
 .menu-list {
     display: flex;
-    gap: 20px;
+    padding-left: 0;
+    margin-top: 0;
+    background-color: #fc6a91;
 }
 
 .menu-item {
     list-style-type: none;
-    border: 1px solid black;
-    padding: 10px;
+    padding: 10px 15px;
 }
 
 .menu-link {
     text-decoration: none;
     color: black;
+    font-weight: 700;
 }
 
 .active {
-    background-color: green;
+    background-color: #eb3464;
+}
+
+.users-list {
+    padding: 0;
+}
+
+.user-item {
+    list-style-type: none;
+}
+
+.user {
+    color: black;
+}
+
+.posts-item,
+.album-item {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.post-title,
+.albums-title {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: black;
+    font-weight: 700;
+}
+
+.comments,
+.photo-number {
+    font-weight: 500;
+}
+
+.author {
+    text-decoration: none;
+    color: black;
+    padding: 10px 0;
 }

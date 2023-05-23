@@ -1,8 +1,8 @@
 function init() {
-    const bodyElement = document.querySelector('body');
     const headerElement = document.createElement('header');
     headerElement.classList.add('navigation-wrapper')
-    bodyElement.prepend(headerElement);
+
+    document.body.prepend(headerElement);
 
     const navigationDiv = document.createElement('nav');
     navigationDiv.classList.add('navigation');
