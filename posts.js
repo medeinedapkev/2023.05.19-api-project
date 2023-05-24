@@ -1,5 +1,16 @@
 async function init() {
-    const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user');
+    const queryParams = location.search;
+    const urlParams = new URLSearchParams(queryParams);
+    
+    const id = urlParams.get('user_id');
+
+    let fetchUrl;
+    if (id) {
+        fetchUrl = `https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user&userId=${id}`;
+    } else {
+        fetchUrl = 'https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user';
+    }
+    const postsResponse = await fetch(fetchUrl);
     const postsData = await postsResponse.json();
 
     const postsWrapper = document.querySelector('#posts-wrapper');
@@ -13,9 +24,9 @@ function createPostsList(posts) {
     const postsDiv = document.createElement('div');
     postsDiv.classList.add('posts-list');
     posts.forEach(postData => {
-        console.log(postData)
         const postId = postData.id;
         const userId = postData.userId;
+        
         const postDivElement = document.createElement('div');
         postDivElement.classList.add('posts-item');
 

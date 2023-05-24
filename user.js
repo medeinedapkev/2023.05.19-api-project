@@ -4,10 +4,20 @@ async function init() {
 
     const id = urlParams.get('user_id');
 
+    const userInfoWrapper = document.querySelector('.user-info-wrapper');
+
+    if (!id) {
+        userInfoWrapper.innerHTML = `<h1>Something is wrong...</h1>
+                                  <p>Search for more users 
+                                  <a href="./users.html">here...</a>
+                                  </p>`;
+  
+        return;
+    }
+
     const userInfoResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${id}?_embed=albums&_embed=posts`);
     const userInfoData = await userInfoResponse.json();
 
-    const userInfoWrapper = document.querySelector('.user-info-wrapper');
 
     const userInfo = createUserInfo(userInfoData);
     const userPosts = createUserPosts(userInfoData);
@@ -31,6 +41,8 @@ function createUserInfo(data) {
     const phone = data.phone;
     const website = data.website;
     const companyName = data.company.name;
+    const lat = data.address.geo.lat;
+    const lng = data.address.geo.lng;
 
     const h1Element = document.createElement('h2');
     h1Element.classList.add('user-name');
@@ -54,7 +66,8 @@ function createUserInfo(data) {
     addressElement.textContent = 'Address: ';
 
     const linkToAddress = document.createElement('a');
-    linkToAddress.href = `https://www.google.com/maps/search/?api=1&query=${data.address.geo.lat},${data.address.geo.lng}`;
+    linkToAddress.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+    linkToAddress.setAttribute('target', '_blank');
     linkToAddress.textContent = `${street}, ${apartment}, ${city}, (zipcode: ${zipCode}).`;
 
     addressElement.append(linkToAddress);
@@ -92,10 +105,6 @@ function createUserPosts(data) {
     
     const titleElement = document.createElement('h2');
     titleElement.textContent = `${data.name} posts:`;
-
-    // const posts = data.posts;
-
-    // notFound(posts, postsWrapper, 'posts', titleElement);
 
     if(!data.posts) {
         const infoElement = document.createElement('p');
@@ -166,12 +175,3 @@ function createUserAlbums(data) {
     return albumsWrapper;
 }
 
-function notFound(element, elementWrapper, text, titleElement) {
-    if(!element) {
-        const infoElement = document.createElement('p');
-        infoElement.textContent = `No ${text} found`;
-        elementWrapper.prepend(titleElement, infoElement);
-    }
-
-    return elementWrapper;
-}

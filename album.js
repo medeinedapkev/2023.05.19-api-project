@@ -1,13 +1,23 @@
 async function init() {
     const queryParams = location.search;
     const urlParams = new URLSearchParams(queryParams);
+    
+    const id = urlParams.get('album_id');
 
-    const id = urlParams.get('album_id')
+    const albumWrapper = document.querySelector('.album-wrapper');
+    
+    if (!id) {
+      albumWrapper.innerHTML = `<h1>Something is wrong...</h1>
+                                <p>Search for more albums 
+                                <a href="./albums.html">here...</a>
+                                </p>`;
+
+      return;
+    }
 
     const albumInfoResponse = await fetch(`https://jsonplaceholder.typicode.com/albums/${id}/?_expand=user&_embed=photos`);
     const albumData = await albumInfoResponse.json();
 
-    const albumWrapper = document.querySelector('.album-wrapper');
     const albumList = createAlbum(albumData);
 
     const photosWrapper = createAlbumPhotos(albumData)

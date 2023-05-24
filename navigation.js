@@ -59,3 +59,11 @@ function createMenu(menu) {
     return ulElement;
 }
 
+function createSearchInput() {
+    const labelElement = document.createElement('label');
+    labelElement.for = 'search';
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.id = 'search';
+    inputElement.name = 'search';
+}
