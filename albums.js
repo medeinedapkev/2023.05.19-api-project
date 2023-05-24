@@ -13,6 +13,7 @@ function createAlbumsList(albums) {
     const albumDiv = document.createElement('div');
     albumDiv.classList.add('albums-list');
     albums.forEach(album => {
+        const albumId = album.id;
         const albumItemDiv = document.createElement('div');
         albumItemDiv.classList.add('album-item');
 
@@ -25,7 +26,7 @@ function createAlbumsList(albums) {
 
         const linkPhotoAlbum = document.createElement('a');
         linkPhotoAlbum.classList.add('link');
-        linkPhotoAlbum.href = '#';
+        linkPhotoAlbum.href = './album.html?album_id=' + albumId;
 
         const albumsTitle = document.createElement('h2');
         albumsTitle.classList.add('albums-title');

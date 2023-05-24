@@ -15,6 +15,7 @@ function usersNameList(users) {
     usersUlElement.classList.add('users-list');
 
     users.forEach(userData => {
+        const userId = userData.id;
         const user = userData.name;
         const userPostNumber = userData.posts.length;
 
@@ -23,8 +24,8 @@ function usersNameList(users) {
         
         const linkToUsersInfo = document.createElement('a');
         linkToUsersInfo.classList.add('link', 'user')
-        linkToUsersInfo.href = './user.html';
         linkToUsersInfo.textContent = `${user} (${userPostNumber})`;
+        linkToUsersInfo.href = './user.html?user_id=' + userId;
 
         userLiElement.append(linkToUsersInfo);
         usersUlElement.append(userLiElement);

@@ -13,6 +13,9 @@ function createPostsList(posts) {
     const postsDiv = document.createElement('div');
     postsDiv.classList.add('posts-list');
     posts.forEach(postData => {
+        console.log(postData)
+        const postId = postData.id;
+        const userId = postData.userId;
         const postDivElement = document.createElement('div');
         postDivElement.classList.add('posts-item');
 
@@ -22,7 +25,7 @@ function createPostsList(posts) {
 
         const postTitle = document.createElement('a')
         postTitle.classList.add('post-title');
-        postTitle.href = './post.html';
+        postTitle.href = './post.html?post_id=' + postId;
         postTitle.textContent = title;
 
         const postsComments = document.createElement('span')
@@ -32,7 +35,7 @@ function createPostsList(posts) {
 
         const authorElement = document.createElement('a');
         authorElement.classList.add('author');
-        authorElement.href = './user.html';
+        authorElement.href = './user.html?user_id=' + userId;
         authorElement.textContent = `Author: ${author}`;
 
         postDivElement.append(postTitle, authorElement);

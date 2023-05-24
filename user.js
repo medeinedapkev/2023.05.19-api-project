@@ -1,13 +1,18 @@
 async function init() {
-    const userInfoResponse = await fetch('https://jsonplaceholder.typicode.com/users/1?_embed=albums&_embed=posts');
+    const queryParams = location.search;
+    const urlParams = new URLSearchParams(queryParams);
+
+    const id = urlParams.get('user_id');
+
+    const userInfoResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${id}?_embed=albums&_embed=posts`);
     const userInfoData = await userInfoResponse.json();
 
-    const bodyElement = document.body;
+    const userInfoWrapper = document.querySelector('.user-info-wrapper');
 
     const userInfo = createUserInfo(userInfoData);
     const userPosts = createUserPosts(userInfoData);
     const userAlbums = createUserAlbums(userInfoData);
-    bodyElement.prepend(userInfo, userPosts, userAlbums);
+    userInfoWrapper.prepend(userInfo, userPosts, userAlbums);
 }
 
 init();
@@ -88,7 +93,7 @@ function createUserPosts(data) {
     const titleElement = document.createElement('h2');
     titleElement.textContent = `${data.name} posts:`;
 
-    const posts = data.posts;
+    // const posts = data.posts;
 
     // notFound(posts, postsWrapper, 'posts', titleElement);
 
@@ -141,7 +146,6 @@ function createUserAlbums(data) {
     }
 
     data.albums.forEach(album => {
-        console.log(album.title)
         const albumTitle = album.title;
 
         const albumItem = document.createElement('div');

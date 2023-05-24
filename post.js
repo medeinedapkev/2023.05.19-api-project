@@ -1,14 +1,18 @@
 async function init() {
-    const postDataResponse = await fetch('https://jsonplaceholder.typicode.com/posts/1/?_embed=comments&_expand=user');
+    const queryParams = location.search;
+    const urlParams = new URLSearchParams(queryParams);
+    
+    const id = urlParams.get('post_id');
+
+    const postDataResponse = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}/?_embed=comments&_expand=user`);
     const postData =  await postDataResponse.json();
 
-    const postWrapper = document.createElement('div');
+    const postWrapper = document.querySelector('.post-wrapper');
     postWrapper.classList.add('post-wrapper');
 
     const postItemDiv = createPost(postData);
 
     postWrapper.append(postItemDiv);
-    document.body.prepend(postWrapper);
 }
 
 init();
@@ -44,12 +48,12 @@ function createPost(data) {
     linkToOthersPosts.href = './posts.html';
     linkToOthersPosts.textContent = "Other post author's posts...";
 
-    comments.forEach(comment => {
+    comments.forEach((comment, index) => {
         let {name, body, email} = comment;
 
         const commentTitle = document.createElement('li');
         commentTitle.classList.add('comment-title');
-        commentTitle.textContent = `1. ${name}`;
+        commentTitle.textContent = `${index + 1}. ${name}`;
 
         const commentText = document.createElement('li');
         commentText.classList.add('comment-text');
