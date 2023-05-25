@@ -1,13 +1,18 @@
+import { API_URL } from "./config.js";
 import { createHTMLElement, fetchData } from "./funtions.js";
+import navigation from "./navigation.js";
 
 async function init() {
 
-    const usersData = await fetchData('https://jsonplaceholder.typicode.com/users?_embed=posts');
+    const usersData = await fetchData(`${API_URL}/users?_embed=posts`);
 
     const usersWrapper = document.querySelector('#users-wrapper');
 
     const usersList = usersNameList(usersData);
     usersWrapper.append(usersList);
+
+    const mainHeader = navigation();
+    usersWrapper.before(mainHeader);
 }
 
 init()

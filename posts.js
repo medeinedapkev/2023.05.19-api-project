@@ -1,20 +1,25 @@
+import navigation from './navigation.js';
+import { API_URL } from './config.js';
 import { fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js';
 
 async function init() {
+    const postsWrapper = document.querySelector('#posts-wrapper');
+
     const id = getUrlParams('user_id');
 
     let fetchUrl;
     if (id) {
-        fetchUrl = `https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user&userId=${id}`;
+        fetchUrl = `${API_URL}/posts?_embed=comments&_expand=user&userId=${id}`;
     } else {
-        fetchUrl = 'https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user';
+        fetchUrl = `${API_URL}/posts?_embed=comments&_expand=user`;
     }
     
     const postsData = await fetchData(fetchUrl);
-
-    const postsWrapper = document.querySelector('#posts-wrapper');
     const postsList =  createPostsList(postsData);
     postsWrapper.append(postsList);
+
+    const mainHeader = navigation();
+    postsWrapper.before(mainHeader);
 }
 
 init();

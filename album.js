@@ -1,4 +1,6 @@
+import navigation from './navigation.js';
 import { fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js';
+import { API_URL } from './config.js';
 
 async function init() {
     const id = getUrlParams('album_id');
@@ -14,14 +16,15 @@ async function init() {
       return;
     }
 
-    const albumData = await fetchData(`https://jsonplaceholder.typicode.com/albums/${id}/?_expand=user&_embed=photos`);
-
+    const albumData = await fetchData(`${API_URL}/albums/${id}/?_expand=user&_embed=photos`);
     const albumList = createAlbum(albumData);
-
     const photosWrapper = createAlbumPhotos(albumData)
 
     albumWrapper.append(albumList);
     albumWrapper.after(photosWrapper);
+
+    const mainHeader = navigation();
+    albumWrapper.before(mainHeader);
 }
 
 init();
@@ -64,7 +67,7 @@ function createAlbumPhotos(data) {
 
     const photoItem = document.createElement('img');
     photoItem.src = photoThumbnailUrl;
-    photoItem.alt = "";
+    photoItem.alt = photo.title;
 
     photoLink.append(photoItem);
 

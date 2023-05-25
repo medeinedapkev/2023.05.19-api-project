@@ -1,74 +1,56 @@
-function init() {
-    const headerElement = document.createElement('header');
-    headerElement.classList.add('navigation-wrapper')
+import { MAIN_MENU_ITEMS } from "./config.js";
+import { createHTMLElement } from './funtions.js';
 
-    document.body.prepend(headerElement);
+export default function navigation() {
+    const headerElement = createHTMLElement('header', 'navigation-wrapper');
 
-    const navigationDiv = document.createElement('nav');
-    navigationDiv.classList.add('navigation');
+    const pageTitle = createHTMLElement('a', 'page-title', 'API PROJECT');
+    pageTitle.href = './';
+
+    const navigationDiv = createHTMLElement('nav', 'navigation');
     
-    const menu = [
-        {
-            name: 'Home',
-            url: './home.html',
-        },
-        {
-            name: 'Users',
-            url: './users.html',
-        },
-        {
-            name: 'Posts',
-            url: './posts.html',
-        },
-        {
-            name: 'Albums',
-            url: './albums.html',
-        }
-    ]
+    const menu = MAIN_MENU_ITEMS;
     
     const navigationList = createMenu(menu);
-    navigationDiv.append(navigationList);
+    
+    const searchForm = document.createElement('form');
+    searchForm.id = 'search-form';
+    searchForm.action = './search.html';
+    
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.id = 'search';
+    searchInput.name = 'search';
 
-    const searhForm = document.createElement('form');
-    searhForm.id = 'search-form';
-    searhForm.action = './search.html';
+    const searchButton = createHTMLElement('button', 'search-form-submit', 'Search');
+    searchButton.setAttribute('type', 'submit');
+    
+    searchForm.append(searchInput, searchButton);
 
-    const labelElement = document.createElement('label');
-    labelElement.setAttribute('for', 'search');
-    const inputElement = document.createElement('input');
-    inputElement.type = 'text';
-    inputElement.id = 'search';
-    inputElement.name = 'search';
+    navigationDiv.append(navigationList, searchForm);
 
-    const submitButton = document.createElement('input');
-    submitButton.id = 'search-form-submit';
-    submitButton.setAttribute('type', 'submit');
+    headerElement.append(pageTitle, navigationDiv);
+    console.log(location.href)
 
-    searhForm.append(labelElement, inputElement, submitButton);
+    searchForm.addEventListener('submit', (event) => {
+        
+        console.dir(event.target)
+        console.log(searchInput.value)
 
-    headerElement.append(navigationDiv, searhForm);
-
-    searhForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        // console.dir(event.target)
-        // console.log(inputElement.value)
     })
 
+    return headerElement;
 }
 
-init();
+
 
 function createMenu(menu) {
-    const ulElement = document.createElement('ul');
-    ulElement.classList.add('menu-list');
+    const ulElement = createHTMLElement('ul', 'menu-list');
 
     menu.forEach(link => {
-        const liElement = document.createElement('li');
-        liElement.classList.add('menu-item');
+        const liElement = createHTMLElement('li', 'menu-item');
 
-        const linkElement = document.createElement('a');
-        linkElement.classList.add('menu-link');
-        linkElement.textContent = link.name;
+        const linkElement = createHTMLElement('a', 'menu-link', link.name)
         linkElement.href = link.url;
 
         liElement.prepend(linkElement);
@@ -84,18 +66,3 @@ function createMenu(menu) {
     return ulElement;
 }
 
-function createSearchInput() {
-    const searhForm = document.createElement('form');
-    searhForm.id = 'search-form';
-
-    const labelElement = document.createElement('label');
-    labelElement.setAttribute('for', 'search');
-    const inputElement = document.createElement('input');
-    inputElement.type = 'text';
-    inputElement.id = 'search';
-    inputElement.name = 'search';
-
-    searhForm.append(labelElement, inputElement);
-
-    return searhForm;
-}

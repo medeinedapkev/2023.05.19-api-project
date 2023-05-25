@@ -1,9 +1,11 @@
+import navigation from './navigation.js';
 import { fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js'
+import { API_URL } from './config.js';
 
 async function init() {
-    const id = getUrlParams('post_id');
-
     const postWrapper = document.querySelector('.post-wrapper');
+
+    const id = getUrlParams('post_id');
 
     if (!id) {
         postWrapper.innerHTML = `<h1>Something is wrong...</h1>
@@ -14,12 +16,12 @@ async function init() {
         return;
     }
 
-    const postData =  await fetchData(`https://jsonplaceholder.typicode.com/posts/${id}/?_embed=comments&_expand=user`);
-    postWrapper.classList.add('post-wrapper');
-
+    const postData =  await fetchData(`${API_URL}/posts/${id}/?_embed=comments&_expand=user`);
     const postItemDiv = createPost(postData);
-
     postWrapper.append(postItemDiv);
+
+    const mainHeader = navigation();
+    postWrapper.before(mainHeader);
 }
 
 init();

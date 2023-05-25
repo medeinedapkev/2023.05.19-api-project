@@ -1,11 +1,16 @@
+import navigation from './navigation.js';
 import { fetchData, firstLetterUpperCase } from './funtions.js';
+import { API_URL } from './config.js';
 
 async function init() {
-    const albumsData = await fetchData('https://jsonplaceholder.typicode.com/albums?_embed=photos&_expand=user');
+    const albumsData = await fetchData(`${API_URL}/albums?_embed=photos&_expand=user`);
 
     const albumsWrapper = document.querySelector('#albums-wrapper');
     const albumsList = createAlbumsList(albumsData);
     albumsWrapper.prepend(albumsList);
+
+    const mainHeader = navigation();
+    albumsWrapper.before(mainHeader);
 }
 
 init();

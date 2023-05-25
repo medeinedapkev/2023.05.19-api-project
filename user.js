@@ -1,3 +1,5 @@
+import navigation from './navigation.js';
+import { API_URL } from './config.js';
 import { fetchData, firstLetterUpperCase, getUrlParams, createHTMLElement } from './funtions.js';
 
 async function init() {
@@ -14,12 +16,15 @@ async function init() {
         return;
     }
 
-    const userInfoData = await fetchData(`https://jsonplaceholder.typicode.com/users/${id}?_embed=albums&_embed=posts`);
+    const userInfoData = await fetchData(`${API_URL}/users/${id}?_embed=albums&_embed=posts`);
 
     const userInfo = createUserInfo(userInfoData);
     const userPosts = createUserPosts(userInfoData);
     const userAlbums = createUserAlbums(userInfoData);
     userInfoWrapper.prepend(userInfo, userPosts, userAlbums);
+
+    const mainHeader = navigation();
+    userInfoWrapper.before(mainHeader);
 }
 
 init();
