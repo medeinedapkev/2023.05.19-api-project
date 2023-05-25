@@ -1,8 +1,7 @@
+import { fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js';
+
 async function init() {
-    const queryParams = location.search;
-    const urlParams = new URLSearchParams(queryParams);
-    
-    const id = urlParams.get('user_id');
+    const id = getUrlParams('user_id');
 
     let fetchUrl;
     if (id) {
@@ -10,8 +9,8 @@ async function init() {
     } else {
         fetchUrl = 'https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user';
     }
-    const postsResponse = await fetch(fetchUrl);
-    const postsData = await postsResponse.json();
+    
+    const postsData = await fetchData(fetchUrl);
 
     const postsWrapper = document.querySelector('#posts-wrapper');
     const postsList =  createPostsList(postsData);
@@ -37,7 +36,7 @@ function createPostsList(posts) {
         const postTitle = document.createElement('a')
         postTitle.classList.add('post-title');
         postTitle.href = './post.html?post_id=' + postId;
-        postTitle.textContent = title;
+        postTitle.textContent = firstLetterUpperCase(title);
 
         const postsComments = document.createElement('span')
         postsComments.classList.add('comments');

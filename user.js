@@ -1,8 +1,7 @@
-async function init() {
-    const queryParams = location.search;
-    const urlParams = new URLSearchParams(queryParams);
+import { fetchData, firstLetterUpperCase, getUrlParams, createHTMLElement } from './funtions.js';
 
-    const id = urlParams.get('user_id');
+async function init() {
+    const id = getUrlParams('user_id');
 
     const userInfoWrapper = document.querySelector('.user-info-wrapper');
 
@@ -15,9 +14,7 @@ async function init() {
         return;
     }
 
-    const userInfoResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${id}?_embed=albums&_embed=posts`);
-    const userInfoData = await userInfoResponse.json();
-
+    const userInfoData = await fetchData(`https://jsonplaceholder.typicode.com/users/${id}?_embed=albums&_embed=posts`);
 
     const userInfo = createUserInfo(userInfoData);
     const userPosts = createUserPosts(userInfoData);
@@ -28,8 +25,8 @@ async function init() {
 init();
 
 function createUserInfo(data) {
-    const userInfoDiv = document.createElement('div');
-    userInfoDiv.classList.add('user-info-wrapper');
+    const userInfoDiv = createHTMLElement('div', 'user-info-wrapper');
+
 
     const name = data.name;
     const userName = data.username;
@@ -44,26 +41,21 @@ function createUserInfo(data) {
     const lat = data.address.geo.lat;
     const lng = data.address.geo.lng;
 
-    const h1Element = document.createElement('h2');
-    h1Element.classList.add('user-name');
-    h1Element.textContent = `${name} information:`;
+    const h1Element = createHTMLElement('h2', 'user-name', `${name} information:`);
 
-    const userNameElement = document.createElement('p');
-    userNameElement.classList.add('user-info-item');
-    userNameElement.textContent = `Username: ${userName}`;
+    const userNameElement = createHTMLElement('p', 'user-info-item', `Username: ${userName}`);
 
-    const emailElement = document.createElement('p');
-    emailElement.classList.add('user-info-item');
-    emailElement.textContent = `Email: `;
+
+    const emailElement = createHTMLElement('p', 'user-info-item', 'Email: ');
+
     const linkToEmail = document.createElement('a');
     linkToEmail.href = `mailto:${email}`;
     linkToEmail.textContent = email;
 
     emailElement.append(linkToEmail);
 
-    const addressElement = document.createElement('p');
-    addressElement.classList.add('user-info-item');
-    addressElement.textContent = 'Address: ';
+    const addressElement = createHTMLElement('p', 'user-info-item', 'Address: ');
+ 
 
     const linkToAddress = document.createElement('a');
     linkToAddress.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
@@ -72,27 +64,24 @@ function createUserInfo(data) {
 
     addressElement.append(linkToAddress);
 
-    const phoneElement = document.createElement('p');
-    phoneElement.classList.add('user-info-item');
-    phoneElement.textContent = 'Phone: ';
+    const phoneElement = createHTMLElement('p', 'user-info-item', 'Phone: ');
+
     const linkToPhone = document.createElement('a');
     linkToPhone.href = `tel:${phone}`
     linkToPhone.textContent = phone;
 
     phoneElement.append(linkToPhone);
 
-    const websiteElement = document.createElement('p');
-    websiteElement.classList.add('user-info-item');
-    websiteElement.textContent = 'Website: ';
+    const websiteElement = createHTMLElement('p', 'user-info-item', 'Website: ')
+
     const linkToWebsite = document.createElement('a');
     linkToWebsite.href = `https://${website}`;
     linkToWebsite.textContent = website;
 
     websiteElement.append(linkToWebsite);
 
-    const companyElement = document.createElement('p');
-    companyElement.classList.add('user-info-item');
-    companyElement.textContent = `Work place: ${companyName}.`;
+    const companyElement = createHTMLElement('p', 'user-info-item', `Work place: ${companyName}.`);
+
 
     userInfoDiv.append(h1Element, userNameElement, emailElement, addressElement, phoneElement, websiteElement, companyElement);
 
@@ -100,11 +89,9 @@ function createUserInfo(data) {
 }
 
 function createUserPosts(data) {
-    const postsWrapper = document.createElement('div');
-    postsWrapper.classList.add('posts-wrapper');
+    const postsWrapper = createHTMLElement('div', 'posts-wrapper');
     
-    const titleElement = document.createElement('h2');
-    titleElement.textContent = `${data.name} posts:`;
+    const titleElement = createHTMLElement('h2', 'posts-title', `${data.name} posts:`);
 
     if(!data.posts) {
         const infoElement = document.createElement('p');
@@ -117,21 +104,16 @@ function createUserPosts(data) {
         const postTitle = post.title;
         const postText = post.body;
 
-        const postItem = document.createElement('div');
-        postItem.classList.add('post-item');
+        const postItem = createHTMLElement('div', 'post-item');
 
         const linkToPost = document.createElement('a');
         linkToPost.href = './post.html'
 
-        const postTitleElement = document.createElement('h3');
-        postTitleElement.classList.add('post-title');
-        postTitleElement.textContent = postTitle;
+        const postTitleElement = createHTMLElement('h3', 'post-title', firstLetterUpperCase(postTitle));
 
         linkToPost.append(postTitleElement);
 
-        const postTextElement = document.createElement('p');
-        postTextElement.classList.add('post-text');
-        postTextElement.textContent = postText;
+        const postTextElement = createHTMLElement('p', 'post-text', firstLetterUpperCase(postText));
 
         postItem.prepend(linkToPost, postTextElement);
         postsWrapper.prepend(titleElement, postItem); 
@@ -141,11 +123,9 @@ function createUserPosts(data) {
 }
 
 function createUserAlbums(data) {
-    const albumsWrapper = document.createElement('div');
-    albumsWrapper.classList.add('albums-wrapper');
+    const albumsWrapper = createHTMLElement('div', 'albums-wrapper');
 
-    const titleElement = document.createElement('h2');
-    titleElement.textContent = `${data.name} albums:`;
+    const titleElement = createHTMLElement('h2', 'albums-title', `${data.name} albums:`);
 
     if(!data.albums) {
         const infoElement = document.createElement('p');
@@ -157,15 +137,12 @@ function createUserAlbums(data) {
     data.albums.forEach(album => {
         const albumTitle = album.title;
 
-        const albumItem = document.createElement('div');
-        albumItem.classList.add('album-item');
+        const albumItem = createHTMLElement('div', 'album-item');
 
         const linkToAlbum = document.createElement('a')
         linkToAlbum.href = './album.html';
 
-        const albumTitleElement = document.createElement('h3');
-        albumTitleElement.classList.add('album-title');
-        albumTitleElement.textContent = albumTitle;
+        const albumTitleElement = createHTMLElement('h3', 'album-title', firstLetterUpperCase(albumTitle));
 
         linkToAlbum.prepend(albumTitleElement);
         albumItem.prepend(linkToAlbum)

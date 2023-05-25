@@ -1,8 +1,7 @@
+import { fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js';
+
 async function init() {
-    const queryParams = location.search;
-    const urlParams = new URLSearchParams(queryParams);
-    
-    const id = urlParams.get('album_id');
+    const id = getUrlParams('album_id');
 
     const albumWrapper = document.querySelector('.album-wrapper');
     
@@ -15,8 +14,7 @@ async function init() {
       return;
     }
 
-    const albumInfoResponse = await fetch(`https://jsonplaceholder.typicode.com/albums/${id}/?_expand=user&_embed=photos`);
-    const albumData = await albumInfoResponse.json();
+    const albumData = await fetchData(`https://jsonplaceholder.typicode.com/albums/${id}/?_expand=user&_embed=photos`);
 
     const albumList = createAlbum(albumData);
 
@@ -37,7 +35,7 @@ function createAlbum(data) {
 
     const titleElement = document.createElement('h2');
     titleElement.classList.add('album-title');
-    titleElement.textContent = title;
+    titleElement.textContent = firstLetterUpperCase(title);
 
     const authorLink = document.createElement('a');
     authorLink.classList.add('link');

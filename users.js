@@ -1,6 +1,8 @@
+import { createHTMLElement, fetchData } from "./funtions.js";
+
 async function init() {
-    const usersResponse = await fetch('https://jsonplaceholder.typicode.com/users?_embed=posts');
-    const usersData = await usersResponse.json();
+
+    const usersData = await fetchData('https://jsonplaceholder.typicode.com/users?_embed=posts');
 
     const usersWrapper = document.querySelector('#users-wrapper');
 
@@ -11,20 +13,17 @@ async function init() {
 init()
 
 function usersNameList(users) {
-    const usersUlElement = document.createElement('ul');
-    usersUlElement.classList.add('users-list');
+    const usersUlElement = createHTMLElement('ul', 'users-list');
 
     users.forEach(userData => {
         const userId = userData.id;
         const user = userData.name;
         const userPostNumber = userData.posts.length;
 
-        const userLiElement = document.createElement('li');
-        userLiElement.classList.add('user-item');
+        const userLiElement = createHTMLElement('li', 'user-item');
         
-        const linkToUsersInfo = document.createElement('a');
-        linkToUsersInfo.classList.add('link', 'user')
-        linkToUsersInfo.textContent = `${user} (${userPostNumber})`;
+        const linkToUsersInfo = createHTMLElement('a', 'link', `${user} (${userPostNumber})`)
+        linkToUsersInfo.classList.add('user');
         linkToUsersInfo.href = './user.html?user_id=' + userId;
 
         userLiElement.append(linkToUsersInfo);

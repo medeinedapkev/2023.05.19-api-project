@@ -6,8 +6,7 @@ function init() {
 
     const navigationDiv = document.createElement('nav');
     navigationDiv.classList.add('navigation');
-    headerElement.append(navigationDiv);
-
+    
     const menu = [
         {
             name: 'Home',
@@ -26,9 +25,35 @@ function init() {
             url: './albums.html',
         }
     ]
-
+    
     const navigationList = createMenu(menu);
     navigationDiv.append(navigationList);
+
+    const searhForm = document.createElement('form');
+    searhForm.id = 'search-form';
+    searhForm.action = './search.html';
+
+    const labelElement = document.createElement('label');
+    labelElement.setAttribute('for', 'search');
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.id = 'search';
+    inputElement.name = 'search';
+
+    const submitButton = document.createElement('input');
+    submitButton.id = 'search-form-submit';
+    submitButton.setAttribute('type', 'submit');
+
+    searhForm.append(labelElement, inputElement, submitButton);
+
+    headerElement.append(navigationDiv, searhForm);
+
+    searhForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        // console.dir(event.target)
+        // console.log(inputElement.value)
+    })
+
 }
 
 init();
@@ -60,10 +85,17 @@ function createMenu(menu) {
 }
 
 function createSearchInput() {
+    const searhForm = document.createElement('form');
+    searhForm.id = 'search-form';
+
     const labelElement = document.createElement('label');
-    labelElement.for = 'search';
+    labelElement.setAttribute('for', 'search');
     const inputElement = document.createElement('input');
     inputElement.type = 'text';
     inputElement.id = 'search';
     inputElement.name = 'search';
+
+    searhForm.append(labelElement, inputElement);
+
+    return searhForm;
 }

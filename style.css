@@ -50,7 +50,6 @@
 .post-title,
 .albums-title {
     text-decoration: none;
-    text-transform: capitalize;
     color: black;
     font-weight: 700;
 }

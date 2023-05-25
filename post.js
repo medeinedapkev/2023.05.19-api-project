@@ -1,8 +1,7 @@
+import { fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js'
+
 async function init() {
-    const queryParams = location.search;
-    const urlParams = new URLSearchParams(queryParams);
-    
-    const id = urlParams.get('post_id');
+    const id = getUrlParams('post_id');
 
     const postWrapper = document.querySelector('.post-wrapper');
 
@@ -15,9 +14,7 @@ async function init() {
         return;
     }
 
-    const postDataResponse = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}/?_embed=comments&_expand=user`);
-    const postData =  await postDataResponse.json();
-
+    const postData =  await fetchData(`https://jsonplaceholder.typicode.com/posts/${id}/?_embed=comments&_expand=user`);
     postWrapper.classList.add('post-wrapper');
 
     const postItemDiv = createPost(postData);
@@ -35,7 +32,7 @@ function createPost(data) {
 
     const postTitle = document.createElement('h1');
     postTitle.classList.add('post-title');
-    postTitle.textContent = title;
+    postTitle.textContent = firstLetterUpperCase(title);
 
     const postAuthor = document.createElement('a');
     postAuthor.classList.add('post-author');
@@ -44,7 +41,7 @@ function createPost(data) {
 
     const postText = document.createElement('p');
     postText.classList.add('post-text');
-    postText.textContent = body;
+    postText.textContent = firstLetterUpperCase(body);
 
     const commentsTitle = document.createElement('h3');
     commentsTitle.classList.add('comments-title');
@@ -63,11 +60,11 @@ function createPost(data) {
 
         const commentTitle = document.createElement('li');
         commentTitle.classList.add('comment-title');
-        commentTitle.textContent = `${index + 1}. ${name}`;
+        commentTitle.textContent = `${index + 1}. ` + firstLetterUpperCase(name);
 
         const commentText = document.createElement('li');
         commentText.classList.add('comment-text');
-        commentText.textContent = body;
+        commentText.textContent = firstLetterUpperCase(body);
 
         const commentAuthor = document.createElement('li');
         commentAuthor.classList.add('comment-author');

@@ -1,6 +1,7 @@
+import { fetchData, firstLetterUpperCase } from './funtions.js';
+
 async function init() {
-    const albumsResponse = await fetch('https://jsonplaceholder.typicode.com/albums?_embed=photos&_expand=user');
-    const albumsData = await albumsResponse.json();
+    const albumsData = await fetchData('https://jsonplaceholder.typicode.com/albums?_embed=photos&_expand=user');
 
     const albumsWrapper = document.querySelector('#albums-wrapper');
     const albumsList = createAlbumsList(albumsData);
@@ -30,7 +31,7 @@ function createAlbumsList(albums) {
 
         const albumsTitle = document.createElement('h2');
         albumsTitle.classList.add('albums-title');
-        albumsTitle.textContent = title;
+        albumsTitle.textContent = firstLetterUpperCase(title);
 
         const photosNumberElement = document.createElement('span');
         photosNumberElement.classList.add('photo-number');
