@@ -1,5 +1,5 @@
 import navigation from './navigation.js';
-import { fetchData, firstLetterUpperCase } from './funtions.js';
+import { createHTMLElement, fetchData, firstLetterUpperCase } from './funtions.js';
 import { API_URL } from './config.js';
 
 async function init() {
@@ -16,12 +16,12 @@ async function init() {
 init();
 
 function createAlbumsList(albums) {
-    const albumDiv = document.createElement('div');
-    albumDiv.classList.add('albums-list');
+    const albumDiv = createHTMLElement('div', 'albums-list');
+
     albums.forEach(album => {
         const albumId = album.id;
-        const albumItemDiv = document.createElement('div');
-        albumItemDiv.classList.add('album-item');
+
+        const albumItemDiv = createHTMLElement('div', 'album-item');
 
         const title = album.title;
         const author = album.user.name;
@@ -30,23 +30,16 @@ function createAlbumsList(albums) {
         const randomPhotoAlt = album.photos[randomIndex].title;
         const randomPhotoUrl = album.photos[randomIndex].thumbnailUrl;
 
-        const linkPhotoAlbum = document.createElement('a');
-        linkPhotoAlbum.classList.add('link');
+        const linkPhotoAlbum = createHTMLElement('a', 'link');
         linkPhotoAlbum.href = './album.html?album_id=' + albumId;
 
-        const albumsTitle = document.createElement('h2');
-        albumsTitle.classList.add('albums-title');
-        albumsTitle.textContent = firstLetterUpperCase(title);
+        const albumsTitle = createHTMLElement('h2', 'albums-title', firstLetterUpperCase(title));
 
-        const photosNumberElement = document.createElement('span');
-        photosNumberElement.classList.add('photo-number');
-        photosNumberElement.textContent = `(${photosNumber})`;
+        const photosNumberElement = createHTMLElement('span', 'photo-number', `(${photosNumber})`);
 
         albumsTitle.append(' ', photosNumberElement);
 
-        const albumAuthor = document.createElement('p');
-        albumAuthor.classList.add('albums-author');
-        albumAuthor.textContent = author;
+        const albumAuthor = createHTMLElement('p', 'albums-author', author);
 
         const picture = document.createElement('img');
         picture.src = randomPhotoUrl;

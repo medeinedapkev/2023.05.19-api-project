@@ -1,5 +1,5 @@
 import navigation from './navigation.js';
-import { fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js'
+import { createHTMLElement, fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js'
 import { API_URL } from './config.js';
 
 async function init() {
@@ -27,53 +27,37 @@ async function init() {
 init();
 
 function createPost(data) {
-    const postItem = document.createElement('div');
-    postItem.classList.add('post-item');
+    const postItem = createHTMLElement('div', 'post-item');
     
-    let {title, user, body, comments} = data;
+    let {title, user, body, comments, userId} = data;
 
-    const postTitle = document.createElement('h1');
-    postTitle.classList.add('post-title');
-    postTitle.textContent = firstLetterUpperCase(title);
+    const postTitle = createHTMLElement('h1', 'post-title', firstLetterUpperCase(title));
 
-    const postAuthor = document.createElement('a');
-    postAuthor.classList.add('post-author');
-    postAuthor.href = './user.html';
-    postAuthor.textContent = user.name
+    const postAuthor = createHTMLElement('a', 'post-author', user.name);
+    postAuthor.href = './user.html?user_id=' + userId;
 
-    const postText = document.createElement('p');
-    postText.classList.add('post-text');
-    postText.textContent = firstLetterUpperCase(body);
+    const postText = createHTMLElement('p', 'post-text', firstLetterUpperCase(body));
 
-    const commentsTitle = document.createElement('h3');
-    commentsTitle.classList.add('comments-title');
-    commentsTitle.textContent = 'Comments:';
+    const commentsTitle = createHTMLElement('h3', 'comments-title', 'Comments:');
 
-    const commentsList = document.createElement('ul');
-    commentsList.classList.add('comments-list');
+    const commentsList = createHTMLElement('ul', 'comments-list');
 
-    const linkToOthersPosts = document.createElement('a');
-    linkToOthersPosts.classList.add('link');
+    const linkToOthersPosts = createHTMLElement('a', 'link', `Other ${user.name} posts...`);
     linkToOthersPosts.href = './posts.html?user_id=' + data.user.id;
-    linkToOthersPosts.textContent = `Other ${user.name} posts...`;
 
     comments.forEach((comment, index) => {
         let {name, body, email} = comment;
 
-        const commentTitle = document.createElement('li');
-        commentTitle.classList.add('comment-title');
-        commentTitle.textContent = `${index + 1}. ` + firstLetterUpperCase(name);
+        const text = `${index + 1}. ` + firstLetterUpperCase(name);
+        const commentTitle = createHTMLElement('li', 'comment-title', text);
 
-        const commentText = document.createElement('li');
-        commentText.classList.add('comment-text');
-        commentText.textContent = firstLetterUpperCase(body);
+        const commentText = createHTMLElement('li', 'comment-text', firstLetterUpperCase(body));
 
-        const commentAuthor = document.createElement('li');
-        commentAuthor.classList.add('comment-author');
-        commentAuthor.textContent = 'Comment author: '
-        const commentAuthorEmail = document.createElement('a');
+        const commentAuthor = createHTMLElement('li', 'comment-author', 'Comment author: ');
+
+        const commentAuthorEmail = createHTMLElement('a', 'comment-author-email', email)
         commentAuthorEmail.href = `mailto:${email}`;
-        commentAuthorEmail.textContent = email;
+
         commentAuthor.append(commentAuthorEmail)
 
         commentsList.append(commentTitle, commentText, commentAuthor)

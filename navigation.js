@@ -30,7 +30,6 @@ export default function navigation() {
     navigationDiv.append(navigationList, searchForm);
 
     headerElement.append(pageTitle, navigationDiv);
-    console.log(location.href)
 
     searchForm.addEventListener('submit', (event) => {
         

@@ -1,5 +1,5 @@
 import navigation from './navigation.js';
-import { fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js';
+import { createHTMLElement, fetchData, firstLetterUpperCase, getUrlParams } from './funtions.js';
 import { API_URL } from './config.js';
 
 async function init() {
@@ -30,20 +30,15 @@ async function init() {
 init();
 
 function createAlbum(data) {
-    const albumItem = document.createElement('div');
-    albumItem.classList.add('album-item');
+    const albumItem = createHTMLElement('div', 'album-item');
   
     let {userId, title} = data;
     const author = data.user.name;
 
-    const titleElement = document.createElement('h2');
-    titleElement.classList.add('album-title');
-    titleElement.textContent = firstLetterUpperCase(title);
+    const titleElement = createHTMLElement('h2', 'album-title', firstLetterUpperCase(title));
 
-    const authorLink = document.createElement('a');
-    authorLink.classList.add('link');
+    const authorLink = createHTMLElement('a', 'link', author);
     authorLink.href = './user.html?user_id=' + userId;
-    authorLink.textContent = author;
 
     albumItem.append(titleElement, authorLink);
 
@@ -61,7 +56,6 @@ function createAlbumPhotos(data) {
 
     const photoLink = document.createElement('a');
     photoLink.href = photoUrl;
-    // photoLink.setAttribute('target', '_blank');
     photoLink.dataset.pswpHeight = '600';
     photoLink.dataset.pswpWidth = '600';
 

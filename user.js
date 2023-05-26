@@ -106,19 +106,18 @@ function createUserPosts(data) {
     }
 
     data.posts.forEach(post => {
-        const postTitle = post.title;
-        const postText = post.body;
+        let { title, body, id } = post;
 
         const postItem = createHTMLElement('div', 'post-item');
 
         const linkToPost = document.createElement('a');
-        linkToPost.href = './post.html'
+        linkToPost.href = './post.html?post_id=' + id;
 
-        const postTitleElement = createHTMLElement('h3', 'post-title', firstLetterUpperCase(postTitle));
+        const postTitleElement = createHTMLElement('h3', 'post-title', firstLetterUpperCase(title));
 
         linkToPost.append(postTitleElement);
 
-        const postTextElement = createHTMLElement('p', 'post-text', firstLetterUpperCase(postText));
+        const postTextElement = createHTMLElement('p', 'post-text', firstLetterUpperCase(body));
 
         postItem.prepend(linkToPost, postTextElement);
         postsWrapper.prepend(titleElement, postItem); 
@@ -140,14 +139,14 @@ function createUserAlbums(data) {
     }
 
     data.albums.forEach(album => {
-        const albumTitle = album.title;
+        let { title, id } = album;
 
         const albumItem = createHTMLElement('div', 'album-item');
 
         const linkToAlbum = document.createElement('a')
-        linkToAlbum.href = './album.html';
+        linkToAlbum.href = './album.html?album_id=' + id;
 
-        const albumTitleElement = createHTMLElement('h3', 'album-title', firstLetterUpperCase(albumTitle));
+        const albumTitleElement = createHTMLElement('h3', 'album-title', firstLetterUpperCase(title));
 
         linkToAlbum.prepend(albumTitleElement);
         albumItem.prepend(linkToAlbum)
