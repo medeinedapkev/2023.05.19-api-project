@@ -15,8 +15,7 @@ async function init() {
             const userInfo = createUserInfo(searchedUsersInfo);
             contentElement.append(userInfo);
         } else {
-            const noFound = createHTMLElement('span', 'no-found', 'No users found');
-            contentElement.append(noFound);
+            notFound('No users found', contentElement);
         }
 
     const searchedPostsInfo = await fetchData(`${API_URL}/posts?q=${searchFor}&_limit=${POSTS_PER_PAGE}`);
@@ -25,8 +24,7 @@ async function init() {
             const postsInfo = createPostsInfo(searchedPostsInfo);
             contentElement.append(postsInfo);
         } else {
-            const noFound = createHTMLElement('span', 'no-found', 'No posts found');
-            contentElement.append(noFound);
+            notFound('No posts found', contentElement);
         }
     
     const searchedAlbumsInfo = await fetchData(`${API_URL}/albums?q=${searchFor}&_limit=${ALBUMS_PER_PAGE}`);
@@ -35,8 +33,7 @@ async function init() {
             const albumsInfo = createAlbumsInfo(searchedAlbumsInfo);
             contentElement.append(albumsInfo);
         } else {
-            const noFound = createHTMLElement('span', 'no-found', 'No albums found');
-            contentElement.append(noFound);
+            notFound('No albums found', contentElement);
         }
 
     const searchedCommentsInfo = await fetchData(`${API_URL}/comments?q=${searchFor}&_limit=${COMMENTS_PER_PAGE}`);
@@ -45,8 +42,7 @@ async function init() {
             const commentsInfo = createCommentsInfo(searchedCommentsInfo);
             contentElement.append(commentsInfo);
         } else {
-            const noFound = createHTMLElement('span', 'no-found', 'No comments found');
-            contentElement.append(noFound);
+            notFound('No comments found', contentElement);
         }
 
     const searchedPhotosInfo = await fetchData(`${API_URL}/photos?q=${searchFor}&_limit=${PHOTOS_PER_PAGE}`);
@@ -55,10 +51,17 @@ async function init() {
             const photosInfo = createPhotosInfo(searchedPhotosInfo);
             contentElement.append(photosInfo);
         } else {
-            const noFound = createHTMLElement('span', 'no-found', 'No photos found');
-            contentElement.append(noFound);
+            notFound('No photos found', contentElement);
         }
+
+    // if (searchedUsersInfo.length === 0 && searchedPostsInfo.length === 0 && searchedAlbumsInfo.length === 0 && searchedCommentsInfo.length === 0 && searchedPhotosInfo.length === 0) {
+    //     notFound('Nothing found...', contentElement);
+    // }
 }
 
 init();
 
+function notFound(text, element) {
+    const noFound = createHTMLElement('span', 'no-found', text);
+    element.append(noFound);
+}

@@ -190,8 +190,6 @@ export function createPhotosInfo(data) {
 
     const photosList = createHTMLElement('div', 'photos-list');
     data.forEach(photo => {
-        console.log(photo)
-
         let { title, thumbnailUrl, albumId } = photo;
 
         const photoItem = createHTMLElement('div', 'photo-item');
@@ -205,11 +203,10 @@ export function createPhotosInfo(data) {
         const linkToAlbum = createHTMLElement('a', 'link', 'See album of this photo...');
         linkToAlbum.href = './album.html?album_id=' + albumId;
 
-
         photoItem.append(photoTitle, photoImg, linkToAlbum);
         photosList.append(photoItem);
         photosWrapper.append(titleElement, photosList);
     })
 
-    return photosWrapper
+    return photosWrapper;
 }
