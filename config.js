@@ -6,7 +6,7 @@ export const PHOTOS_PER_PAGE = 10;
 export const MAIN_MENU_ITEMS = [
     {
         name: 'Home',
-        url: './home.html',
+        url: './index.html',
     },
     {
         name: 'Users',
