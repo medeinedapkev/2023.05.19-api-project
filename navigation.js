@@ -41,8 +41,6 @@ export default function navigation() {
     return headerElement;
 }
 
-
-
 function createMenu(menu) {
     const ulElement = createHTMLElement('ul', 'menu-list');
 

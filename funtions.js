@@ -96,7 +96,6 @@ export function createUserInfo(dataArr) {
     return userInfoDiv;
 }
 
-
 export function createPostsInfo(data) {
     const postsWrapper = createHTMLElement('div', 'posts-wrapper');
 

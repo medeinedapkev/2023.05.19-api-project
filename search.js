@@ -3,11 +3,21 @@ import { ALBUMS_PER_PAGE, API_URL, COMMENTS_PER_PAGE, PHOTOS_PER_PAGE, POSTS_PER
 import { createAlbumsInfo, createCommentsInfo, createHTMLElement, createPhotosInfo, createPostsInfo, createUserInfo, fetchData, getUrlParams } from "./funtions.js";
 
 async function init() {
-    const contentElement = document.querySelector('.content');
+    const searchPageForm = document.querySelector('#search-page-form');
     const mainHeader = navigation();
-    contentElement.before(mainHeader);
+    searchPageForm.before(mainHeader);
+
+    const contentElement = document.querySelector('.content');
 
     const searchFor = getUrlParams('search');
+    console.log(searchFor)
+
+    if (searchFor.length === 0) {
+        const alertMessage = createHTMLElement('span', 'alert-message', 'You have write something...');
+        searchPageForm.after(alertMessage);
+
+        return alertMessage;
+    }
 
     const searchedUsersInfo = await fetchData(`${API_URL}/users?q=${searchFor}`);
 
