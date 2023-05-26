@@ -32,7 +32,6 @@ init();
 function createUserInfo(data) {
     const userInfoDiv = createHTMLElement('div', 'user-info-wrapper');
 
-
     const name = data.name;
     const userName = data.username;
     const email = data.email;
@@ -50,7 +49,6 @@ function createUserInfo(data) {
 
     const userNameElement = createHTMLElement('p', 'user-info-item', `Username: ${userName}`);
 
-
     const emailElement = createHTMLElement('p', 'user-info-item', 'Email: ');
 
     const linkToEmail = document.createElement('a');
@@ -61,7 +59,6 @@ function createUserInfo(data) {
 
     const addressElement = createHTMLElement('p', 'user-info-item', 'Address: ');
  
-
     const linkToAddress = document.createElement('a');
     linkToAddress.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
     linkToAddress.setAttribute('target', '_blank');
@@ -86,7 +83,6 @@ function createUserInfo(data) {
     websiteElement.append(linkToWebsite);
 
     const companyElement = createHTMLElement('p', 'user-info-item', `Work place: ${companyName}.`);
-
 
     userInfoDiv.append(h1Element, userNameElement, emailElement, addressElement, phoneElement, websiteElement, companyElement);
 
