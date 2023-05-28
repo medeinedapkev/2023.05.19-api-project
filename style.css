@@ -60,10 +60,8 @@
     font-weight: 600;
 }
 
-#search-page-form {
+#local-search-form {
     display: flex;
-    
-
 }
 
 .users-list {

@@ -13,6 +13,13 @@ export default function navigation() {
     
     const navigationList = createMenu(menu);
     
+    headerElement.append(pageTitle, navigationDiv);
+    navigationDiv.append(navigationList);
+
+    if (location.pathname === '/search.html') {
+        return headerElement;
+    }
+
     const searchForm = document.createElement('form');
     searchForm.id = 'search-form';
     searchForm.action = './search.html';
@@ -26,10 +33,7 @@ export default function navigation() {
     searchButton.setAttribute('type', 'submit');
     
     searchForm.append(searchInput, searchButton);
-
-    navigationDiv.append(navigationList, searchForm);
-
-    headerElement.append(pageTitle, navigationDiv);
+    navigationDiv.append(searchForm);
 
     searchForm.addEventListener('submit', (event) => {
         
