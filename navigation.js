@@ -35,10 +35,7 @@ export default function navigation() {
     searchForm.append(searchInput, searchButton);
     navigationDiv.append(searchForm);
 
-    searchForm.addEventListener('submit', (event) => {
-        
-        console.dir(event.target)
-        console.log(searchInput.value)
+    searchForm.addEventListener('submit', () => {
 
     })
 
