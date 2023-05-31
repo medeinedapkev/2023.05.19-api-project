@@ -35,10 +35,6 @@ export default function navigation() {
     searchForm.append(searchInput, searchButton);
     navigationDiv.append(searchForm);
 
-    searchForm.addEventListener('submit', () => {
-
-    })
-
     return headerElement;
 }
 
