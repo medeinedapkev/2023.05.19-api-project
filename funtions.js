@@ -209,3 +209,8 @@ export function createPhotosInfo(data) {
 
     return photosWrapper;
 }
+
+export function notFound(text, element) {
+    const noFound = createHTMLElement('span', 'no-found', text);
+    element.append(noFound);
+}
